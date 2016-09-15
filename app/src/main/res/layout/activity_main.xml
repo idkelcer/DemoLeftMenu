@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/app_bar_main" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appBar">
+
+        <!--Content-->
+        <include layout="@layout/content_main" />
+
+        <!-- Navigation Drawer-->
+        <LinearLayout
+            android:id="@+id/relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|bottom"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/drawerRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_weight="5"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="left"
+                app:reverseLayout="false"
+                app:stackFromEnd="false" />
+
+            <include
+                layout="@layout/main_menu_footer"
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>
