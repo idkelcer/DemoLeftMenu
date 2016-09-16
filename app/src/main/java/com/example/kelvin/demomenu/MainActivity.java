@@ -11,13 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    private Toolbar toolbar;
     private RecyclerView.LayoutManager layoutManager;
     private DrawerAdapter mDrawerAdapter;
     private RecyclerView mRecyclerView;
@@ -28,10 +29,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolBar);
-        setSupportActionBar(mToolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        View logo = getLayoutInflater().inflate(R.layout.toolbar_ahorro_custom_view, null);
+        Toolbar.LayoutParams params = new Toolbar.LayoutParams(
+                Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
+        toolbar.addView(logo, params);
 
         setupDrawerItemList();
 
@@ -44,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -69,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickLister(new DrawerAdapter.OnItemSelecteListener() {
             @Override
             public void onItemSelected(View v, int position) {
-                Toast.makeText(MainActivity.this, "You clicked at position: "+ position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "You clicked at position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -118,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

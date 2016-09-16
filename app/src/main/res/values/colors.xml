@@ -3,12 +3,18 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#403e3e</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorText">#FFFFFF</color>
+    <color name="colorWhiteText">#FFFFFF</color>
+    <color name="colorYelowText">#f7c100</color>
 
-    <color name="orange">#FE642E</color>
-    <color name="blue">#58D3F7</color>
-    <color name="lightBlue">#81DAF5</color>
-    <color name="purple">#A901DB</color>
-    <color name="green">#04B486</color>
-    <color name="gray">#6E6E6E</color>
+    <color name="orange">#F5821F</color>
+    <color name="blue">#0C7BBC</color>
+    <color name="lightBlue">#00A0AF</color>
+    <color name="purple">#761472</color>
+    <color name="green">#1A8B43</color>
+    <color name="gray">#848588</color>
+
+
+    <color name="colorAhorroBackground">#403e3e</color>
+    <color name="amarillo_letras">#F7C100</color>
+    <color name="gris_letras">#403E3E</color>
 </resources>

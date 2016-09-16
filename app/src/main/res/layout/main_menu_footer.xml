@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MIS FAVORITOS"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorWhiteText"
             android:textSize="@dimen/text_menu_bottom"/>
 
     </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CONTÁCTANOS"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorWhiteText"
             android:textSize="@dimen/text_menu_bottom"/>
 
     </LinearLayout>
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BUSCAR"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorWhiteText"
             android:textSize="@dimen/text_menu_bottom"/>
 
     </LinearLayout>
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CONFIGURACIÓN"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorWhiteText"
             android:textSize="@dimen/text_menu_bottom"/>
 
     </LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50.5dp"
+    android:orientation="vertical"
+>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:id="@+id/icono"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/texto"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp"
+            android:textColorHint="#F3B60B"
+            android:textColor="#F3B60B"
+            android:background="#00000000"
+            android:gravity="left|center_vertical"
+             />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/close"
+            android:layout_width="16.4dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/LineField"
+        android:layout_width="match_parent"
+        android:layout_height="2.5dp"
+        android:background="#F3B60B" />
+</LinearLayout>
