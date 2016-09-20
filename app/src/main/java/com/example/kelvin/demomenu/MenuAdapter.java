@@ -1,6 +1,6 @@
 package com.example.kelvin.demomenu;
 
-import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +13,13 @@ import java.util.ArrayList;
 /**
  * Created by darshanz on 7/6/15.
  */
-public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerViewHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.DrawerViewHolder> {
 
     private ArrayList<DrawerItem> drawerMenuList;
 
     private OnItemSelecteListener mListener;
 
-    public DrawerAdapter(ArrayList<DrawerItem> drawerMenuList) {
+    public MenuAdapter(ArrayList<DrawerItem> drawerMenuList) {
         this.drawerMenuList = drawerMenuList;
     }
 
@@ -35,6 +35,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerView
 
     @Override
     public void onBindViewHolder(DrawerViewHolder holder, int position) {
+
+        //holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.gray));
 
         holder.title.setText(drawerMenuList.get(position).getTitle());
         holder.icon.setImageResource(drawerMenuList.get(position).getIcon());

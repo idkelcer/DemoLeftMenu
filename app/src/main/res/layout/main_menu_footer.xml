@@ -8,6 +8,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/footerLayoutFavourite"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -16,6 +17,7 @@
 
 
         <ImageView
+            android:id="@+id/imgFavourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/favorite_menu_lower" />
@@ -26,11 +28,12 @@
             android:layout_height="wrap_content"
             android:text="MIS FAVORITOS"
             android:textColor="@color/colorWhiteText"
-            android:textSize="@dimen/text_menu_bottom"/>
+            android:textSize="@dimen/text_menu_bottom" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/footerLayoutContact"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -39,6 +42,7 @@
 
 
         <ImageView
+            android:id="@+id/imgContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/message_menu_lower" />
@@ -56,6 +60,7 @@
 
 
     <LinearLayout
+        android:id="@+id/footerLayoutSearch"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -64,6 +69,7 @@
 
 
         <ImageView
+            android:id="@+id/imgSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/search_menu_lower" />
@@ -80,6 +86,7 @@
 
 
     <LinearLayout
+        android:id="@+id/footerLayoutSettings"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -88,6 +95,7 @@
 
 
         <ImageView
+            android:id="@+id/imgSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/configuration_menu_lower" />

@@ -17,4 +17,5 @@
     <color name="colorAhorroBackground">#403e3e</color>
     <color name="amarillo_letras">#F7C100</color>
     <color name="gris_letras">#403E3E</color>
+    <color name="colorBlackTransparent">#88676767</color>
 </resources>

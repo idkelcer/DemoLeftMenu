@@ -3,8 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:gravity="center_vertical"
-    android:background="?attr/selectableItemBackground">
+    android:gravity="center_vertical">
 
     <View
         android:id="@+id/leftView"
