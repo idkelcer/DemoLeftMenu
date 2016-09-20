@@ -77,6 +77,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.DrawerViewHold
     }
 
     public interface OnItemSelecteListener {
-        public void onItemSelected(View v, int position);
+        void onItemSelected(View v, int position);
     }
 }

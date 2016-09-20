@@ -3,7 +3,7 @@ package com.example.kelvin.demomenu.entities;
 /**
  * Created by kelvin on 19/09/16.
  */
-public class Consumos {
+public class MonthSaving {
 
     private int tipoEstablecimientoId;
     private String nombre;

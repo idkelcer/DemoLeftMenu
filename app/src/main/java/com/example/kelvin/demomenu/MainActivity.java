@@ -1,6 +1,7 @@
 package com.example.kelvin.demomenu;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,14 +15,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.kelvin.demomenu.adapters.ConsumptionsAdapter;
+import com.example.kelvin.demomenu.adapters.MenuListAdapter;
 import com.example.kelvin.demomenu.entities.AnualSavingResponse;
-import com.example.kelvin.demomenu.entities.Consumos;
-import com.example.kelvin.demomenu.entities.ConsumosResponse;
+import com.example.kelvin.demomenu.entities.Category;
+import com.example.kelvin.demomenu.entities.CategoryResponse;
+import com.example.kelvin.demomenu.entities.MonthSaving;
+import com.example.kelvin.demomenu.entities.MonthSavingResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private View selectedFooterView;
     private double currentMonthSavings, currentYearSavings;
     private Toolbar toolbar;
+    private MonthSavingResponse monthSavingResponse;
 
 
     @Override
@@ -48,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        setupDrawerItemList();
+        //setupDrawerItemList();
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.drawerRecyclerView);
+        /*RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.drawerRecyclerView);
 
         MenuAdapter adapter = new MenuAdapter(mDrawerItemList);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);*/
 
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
@@ -65,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onDrawerClosed(drawerView);
                 //TODO Add some action here
                 //Executed when drawer closes
-
-                Toast.makeText(MainActivity.this, "Closed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -75,37 +81,15 @@ public class MainActivity extends AppCompatActivity {
                 //TODO Add some action here
                 //executes when drawer open
                 //drawerView.fi
-
-                Toast.makeText(MainActivity.this, "Opened", Toast.LENGTH_SHORT).show();
             }
         };
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        adapter.setOnItemClickLister(new MenuAdapter.OnItemSelecteListener() {
-
-            View selectedView;
-
-            @Override
-            public void onItemSelected(View v, int position) {
-
-                if (selectedView != null)
-                    selectedView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-
-                //Toast.makeText(MainActivity.this, "You clicked at position: " + position, Toast.LENGTH_SHORT).show();
-                if (selectedFooterView != null)
-                    selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-
-
-                v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
-
-                selectedView = v;
-            }
-        });
-
         setFooterMenuOnItemClickListener();
 
+        getCategoriesFromServer();
         getConsumosPorMesFromServer();
         getTotalAnnualSavingsFromServer();
     }
@@ -193,11 +177,76 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void getCategoriesFromServer() {
+
+        String url = Constants.serviceUrl + "listTipobeneficio";
+
+        ClubRequestManager.getInstance(this).performJsonRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, response.toString());
+
+                        if (response.has("error")) {
+
+                            try {
+                                showError(response.getString("error"));
+                            } catch (JSONException e) {
+                                Log.i(TAG, e.getLocalizedMessage());
+                            }
+                        } else {
+
+                            CategoryResponse categoryResponse = new CategoryResponse(response);
+                            setUpMenuList(categoryResponse.getData());
+
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        //showError(VolleyErrorHelper.getMessage(error, CercaDeMiActivity.this));
+                        Log.i(TAG, "message error " + error.getLocalizedMessage());
+                    }
+                });
+    }
+
+    private void setUpMenuList(List<Category> categories) {
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.drawerRecyclerView);
+
+        MenuListAdapter adapter = new MenuListAdapter(categories);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new MenuListAdapter.OnItemSelecteListener() {
+
+            View selectedView;
+
+            @Override
+            public void onItemSelected(View v, int position) {
+
+                if (selectedView != null)
+                    selectedView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+                if (selectedFooterView != null)
+                    selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+                v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
+
+                selectedView = v;
+            }
+        });
+    }
+
 
     private void getConsumosPorMesFromServer() {
 
         String url = Constants.serviceUrl + "consumoxmes";
-        String fullUrl = url + "?session=c37c7c360dfe687c058120640592063f" + "&mes" + getCurrentMonth();
+        String fullUrl = url + "?session=d480d0d9db8ef474ac54a0af0ebe71a1" + "&mes=" + 5;//getCurrentMonth();
 
         ClubRequestManager.getInstance(this).performJsonRequest(Request.Method.GET, fullUrl, null,
 
@@ -216,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         } else {
 
-                            ConsumosResponse consumosResponse = new ConsumosResponse(response);
-                            currentMonthSavings = getCurrentMonthSavings(consumosResponse);
+                            monthSavingResponse = new MonthSavingResponse(response);
+                            currentMonthSavings = getTotalMonthSavings(monthSavingResponse);
 
                             Log.i(TAG, "no problems");
                         }
@@ -233,12 +282,62 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void addToolbarCustomView() {
+    private void addHeaderToolbar() {
 
-        View logo = getLayoutInflater().inflate(R.layout.toolbar_subscribe_custom_view, null);
-        Toolbar.LayoutParams params = new Toolbar.LayoutParams(
-                Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
-        toolbar.addView(logo, params);
+        int retval = Double.compare(currentYearSavings, 0);
+
+        View head = null;
+
+        if (retval > 0) {
+
+            int retval1 = Double.compare(currentMonthSavings, 0);
+
+            if (retval1 > 0) {
+
+                int retval2 = Double.compare(currentMonthSavings, 35);
+
+                if (retval2 > 0) {
+
+                    head = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                } else if (retval2 < 0) {
+
+                    head = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
+                } else {
+
+                    head = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                }
+
+
+            } else if (retval1 < 0) {
+
+            } else {
+
+                head = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+            }
+
+        } else if (retval < 0) {
+
+
+        } else {
+
+            head = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+        }
+
+        if (head != null) {
+            Toolbar.LayoutParams params = new Toolbar.LayoutParams(
+                    Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
+
+            head.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.i(TAG, "on click");
+                    showPopup();
+                }
+            });
+
+            toolbar.addView(head, params);
+        }
     }
 
     private void showError(String errorMessage) {
@@ -253,10 +352,50 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+
             }
         });
 
         alertDialog.show();
+    }
+
+    private void showPopup() {
+
+        View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
+        PopupWindow popup = new PopupWindow(popupLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, false);
+
+       /* PopupWindow popup = new PopupWindow(MainActivity.this.getParent());
+        View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
+        popup.setContentView(popupLayout);
+        //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+
+        //popup.setWindowLayoutType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        // Set content width and height
+        popup.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popup.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);*/
+        // Closes the popup window when touch outside of it - when looses focus
+        setUpViews(popupLayout);
+
+        //popup.setOutsideTouchable(true);
+        //popup.setFocusable(true);
+        //popup.setBackgroundDrawable(new ColorDrawable());
+
+        popup.showAsDropDown(toolbar);
+    }
+
+    private void setUpViews(View popup) {
+
+        RecyclerView recyclerView = (RecyclerView) popup.findViewById(R.id.recyclerDetails);
+
+        if (monthSavingResponse.getData().size() == 0) {
+
+            recyclerView.setVisibility(View.GONE);
+        } else {
+
+            ConsumptionsAdapter adapter = new ConsumptionsAdapter(monthSavingResponse.getData());
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private int getCurrentMonth() {
@@ -266,13 +405,13 @@ public class MainActivity extends AppCompatActivity {
         return (c.get(Calendar.MONTH) + 1);
     }
 
-    private double getCurrentMonthSavings(ConsumosResponse consumosResponse) {
+    private double getTotalMonthSavings(MonthSavingResponse monthSavingResponse) {
 
-        List<Consumos> consumos = consumosResponse.getData();
+        List<MonthSaving> consumos = monthSavingResponse.getData();
 
         double totalSavings = 0;
 
-        for (Consumos c : consumos) {
+        for (MonthSaving c : consumos) {
             totalSavings += c.getMontoDescontado();
         }
 
@@ -305,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
                             AnualSavingResponse anual = new AnualSavingResponse(response);
                             currentYearSavings = anual.getData().getAhorroAnual();
 
-                            addToolbarCustomView();
+                            addHeaderToolbar();
                         }
                     }
                 }, new Response.ErrorListener() {
