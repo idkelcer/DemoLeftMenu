@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhiteText">#FFFFFF</color>
     <color name="colorYelowText">#f7c100</color>
+    <color name="colorBlueText">#00AFDF</color>
 
     <color name="orange">#F5821F</color>
     <color name="blue">#0C7BBC</color>
@@ -12,7 +13,6 @@
     <color name="purple">#761472</color>
     <color name="green">#1A8B43</color>
     <color name="gray">#848588</color>
-
 
     <color name="colorAhorroBackground">#403e3e</color>
     <color name="amarillo_letras">#F7C100</color>

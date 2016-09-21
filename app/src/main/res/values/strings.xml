@@ -7,6 +7,8 @@
     <string name="close">Close</string>
 
     <string name="country_prompt">Escoge un mes</string>
+    <string name="referenciales">- Montos referenciales\n- Para ver todos tus consumos ingresa a\n&#160;&#160;www.clubelcomercio.pe e inicia sesión</string>
+    <string name="money_format">S/. %.2f</string>
 
     <string-array name="country_arrays">
         <item>Enero</item>

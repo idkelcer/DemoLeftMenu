@@ -1,7 +1,6 @@
 package com.example.kelvin.demomenu;
 
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,8 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -42,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ArrayList<DrawerItem> mDrawerItemList;
     private View selectedFooterView;
-    private double currentMonthSavings, currentYearSavings;
     private Toolbar toolbar;
     private MonthSavingResponse monthSavingResponse;
+    private double totalAnnualSaving;
+    private View toolbarHead;
+    private PopupWindow popupDetails;
+    private int currentMonth = 5;
 
 
     @Override
@@ -87,11 +91,16 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
+        getCategoriesFromServer();
+        getConsumosPorMesFromServer(currentMonth);
+        getTotalAnnualSavingsFromServer();
+
         setFooterMenuOnItemClickListener();
 
-        getCategoriesFromServer();
-        getConsumosPorMesFromServer();
-        getTotalAnnualSavingsFromServer();
+        View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
+        popupDetails = new PopupWindow(popupLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, false);
+
+        setUpPopupViews();
     }
 
     private void setFooterMenuOnItemClickListener() {
@@ -243,10 +252,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getConsumosPorMesFromServer() {
+    private void getConsumosPorMesFromServer(int month) {
 
         String url = Constants.serviceUrl + "consumoxmes";
-        String fullUrl = url + "?session=d480d0d9db8ef474ac54a0af0ebe71a1" + "&mes=" + 5;//getCurrentMonth();
+        String fullUrl = url + "?session=d480d0d9db8ef474ac54a0af0ebe71a1" + "&mes=" + month;//getCurrentMonth();
 
         ClubRequestManager.getInstance(this).performJsonRequest(Request.Method.GET, fullUrl, null,
 
@@ -266,7 +275,13 @@ public class MainActivity extends AppCompatActivity {
                         } else {
 
                             monthSavingResponse = new MonthSavingResponse(response);
-                            currentMonthSavings = getTotalMonthSavings(monthSavingResponse);
+
+                            if (toolbarHead == null) {
+
+                                addHeaderToolbar();
+                            }
+
+                            setUpPopupRecyclerView();
 
                             Log.i(TAG, "no problems");
                         }
@@ -284,9 +299,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void addHeaderToolbar() {
 
-        int retval = Double.compare(currentYearSavings, 0);
+        /*int retval = Double.compare(currentYearSavings, 0);
 
-        View head = null;
+        View toolbarHead = null;
 
         if (retval > 0) {
 
@@ -298,13 +313,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (retval2 > 0) {
 
-                    head = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                    toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
                 } else if (retval2 < 0) {
 
-                    head = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
+                    toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
                 } else {
 
-                    head = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                    toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
                 }
 
 
@@ -312,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
 
-                head = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
             }
 
         } else if (retval < 0) {
@@ -320,14 +335,14 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            head = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
         }
 
-        if (head != null) {
+        if (toolbarHead != null) {
             Toolbar.LayoutParams params = new Toolbar.LayoutParams(
                     Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
 
-            head.setOnClickListener(new View.OnClickListener() {
+            toolbarHead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -336,7 +351,61 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            toolbar.addView(head, params);
+            toolbar.addView(toolbarHead, params);
+        }*/
+
+
+        if (monthSavingResponse.getStatusCount() == 0) {
+
+            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+        } else if (monthSavingResponse.getStatusCount() == 2) {
+
+            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+        } else if (monthSavingResponse.getStatusCount() == 3) {
+
+            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+        } else if (monthSavingResponse.getStatusCount() == 1) {
+
+            int retval2 = Double.compare(getTotalMonthSavings(monthSavingResponse), 35);
+
+            if (retval2 > 0) {
+
+                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+            } else if (retval2 < 0) {
+
+                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
+            } else {
+
+                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+            }
+
+        } else {
+            Log.i(TAG, "error in monthSavingResponse");
+        }
+
+        if (toolbarHead != null) {
+            Toolbar.LayoutParams params = new Toolbar.LayoutParams(
+                    Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
+
+            toolbarHead.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.i(TAG, "on click");
+                    if (popupDetails != null && popupDetails.isShowing())
+                        popupDetails.dismiss();
+                    else
+                        showPopup();
+
+                }
+            });
+
+            toolbar.addView(toolbarHead, params);
+
+            TextView textView = (TextView) toolbarHead.findViewById(R.id.txtTotalSaving);
+
+            if (textView != null)
+                textView.setText("S/. " + String.valueOf(getTotalMonthSavings(monthSavingResponse)));
         }
     }
 
@@ -361,9 +430,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showPopup() {
 
-        View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
-        PopupWindow popup = new PopupWindow(popupLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, false);
-
        /* PopupWindow popup = new PopupWindow(MainActivity.this.getParent());
         View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
         popup.setContentView(popupLayout);
@@ -374,27 +440,83 @@ public class MainActivity extends AppCompatActivity {
         popup.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         popup.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);*/
         // Closes the popup window when touch outside of it - when looses focus
-        setUpViews(popupLayout);
+        // setUpPopupViews();
 
         //popup.setOutsideTouchable(true);
         //popup.setFocusable(true);
         //popup.setBackgroundDrawable(new ColorDrawable());
 
-        popup.showAsDropDown(toolbar);
+        popupDetails.showAsDropDown(toolbar);
     }
 
-    private void setUpViews(View popup) {
+    private void setUpPopupViews() {
 
-        RecyclerView recyclerView = (RecyclerView) popup.findViewById(R.id.recyclerDetails);
+        View popup = popupDetails.getContentView();
+
+        TextView annualSaving = (TextView) popup.findViewById(R.id.annualSaving);
+        annualSaving.setText(getResources().getString(R.string.money_format, totalAnnualSaving));
+
+        final Spinner spinner = (Spinner) popup.findViewById(R.id.spinner);
+        spinner.setSelection(currentMonth - 1);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final TextView nextTxt = (TextView) popup.findViewById(R.id.txtNext);
+        nextTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                currentMonth++;
+
+                if(currentMonth == 12)
+                    nextTxt.setVisibility(View.INVISIBLE);
+
+                getConsumosPorMesFromServer(currentMonth);
+                spinner.setSelection(currentMonth - 1, true);
+                Log.i(TAG, "current month " + currentMonth);
+            }
+        });
+
+        TextView backTxt = (TextView) popup.findViewById(R.id.txtBack);
+        backTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                currentMonth--;
+
+
+
+                getConsumosPorMesFromServer(currentMonth);
+                spinner.setSelection(currentMonth - 1, true);
+                Log.i(TAG, "current month " + currentMonth);
+            }
+        });
+    }
+
+    private void setUpPopupRecyclerView() {
+
+        RecyclerView recyclerView = (RecyclerView) popupDetails.getContentView().findViewById(R.id.recyclerDetails);
 
         if (monthSavingResponse.getData().size() == 0) {
 
             recyclerView.setVisibility(View.GONE);
         } else {
 
+            recyclerView.setVisibility(View.VISIBLE);
             ConsumptionsAdapter adapter = new ConsumptionsAdapter(monthSavingResponse.getData());
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -405,9 +527,9 @@ public class MainActivity extends AppCompatActivity {
         return (c.get(Calendar.MONTH) + 1);
     }
 
-    private double getTotalMonthSavings(MonthSavingResponse monthSavingResponse) {
+    private double getTotalMonthSavings(MonthSavingResponse monthSaving) {
 
-        List<MonthSaving> consumos = monthSavingResponse.getData();
+        List<MonthSaving> consumos = monthSaving.getData();
 
         double totalSavings = 0;
 
@@ -421,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
     private void getTotalAnnualSavingsFromServer() {
 
         String url = Constants.serviceUrl + "totalAhorroAnual";
-        String fullUrl = url + "?session=c37c7c360dfe687c058120640592063f";
+        String fullUrl = url + "?session=d480d0d9db8ef474ac54a0af0ebe71a1";
 
         ClubRequestManager.getInstance(this).performJsonRequest(Request.Method.GET, fullUrl, null,
 
@@ -442,9 +564,8 @@ public class MainActivity extends AppCompatActivity {
 
                             Log.i(TAG, "no problems annual");
                             AnualSavingResponse anual = new AnualSavingResponse(response);
-                            currentYearSavings = anual.getData().getAhorroAnual();
+                            totalAnnualSaving = anual.getData().getAhorroAnual();
 
-                            addHeaderToolbar();
                         }
                     }
                 }, new Response.ErrorListener() {

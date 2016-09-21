@@ -30,7 +30,7 @@ public class ConsumptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == TYPE_HEADER) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.popup_header_item, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.popup_header, parent, false);
             return new ListHeader(v);
         } else if (viewType == TYPE_ITEM) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.popup_list_item, parent, false);
@@ -54,11 +54,11 @@ public class ConsumptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             ListItem item = (ListItem) holder;
 
-            Log.i("adapter", "adapter");
-
             item.txtBenefit.setText(monthSavings.get(position - 1).getNombre());
             item.txtDate.setText(monthSavings.get(position - 1).getFechaConsumo());
-            item.txtSavings.setText(String.valueOf(monthSavings.get(position - 1).getMontoDescontado()));
+
+            item.txtSavings.setText(item.txtSavings.getContext().getResources().getString(R.string.money_format,
+                                                                monthSavings.get(position - 1).getMontoDescontado()));
         }
     }
 
