@@ -1,6 +1,7 @@
 package com.example.kelvin.demomenu.adapters;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.kelvin.demomenu.ClubRequestManager;
-import com.example.kelvin.demomenu.MenuAdapter;
+import com.example.kelvin.demomenu.MainActivity;
 import com.example.kelvin.demomenu.R;
 import com.example.kelvin.demomenu.entities.Category;
 
@@ -44,9 +45,11 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Custom
 
         final Category category = categoryList.get(position);
 
-        holder.textView.setText(category.getNombre().toUpperCase());
+        holder.textView.setText(category.getNombre());
+        holder.textView.setTypeface(MainActivity.typeFace);
+        holder.colorView.setBackgroundColor(Color.parseColor(category.getColor()));
 
-        ImageLoader imageLoader = ClubRequestManager.getInstance(holder.textView.getContext()).getImageLoader();
+        ImageLoader imageLoader = ClubRequestManager.getInstance(holder.colorView.getContext()).getImageLoader();
 
         imageLoader.get(category.getIcono(), new ImageLoader.ImageListener() {
             @Override
@@ -73,18 +76,19 @@ public class MenuListAdapter extends RecyclerView.Adapter<MenuListAdapter.Custom
 
         public TextView textView;
         public ImageView imageView;
+        public View colorView;
 
         public CustomViewHolder(View view) {
             super(view);
 
             textView = (TextView) view.findViewById(R.id.text);
             imageView = (ImageView) view.findViewById(R.id.image);
+            colorView = view.findViewById(R.id.colorView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mListener.onItemSelected(view, getAdapterPosition());
-
                 }
             });
         }

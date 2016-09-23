@@ -1,6 +1,7 @@
 package com.example.kelvin.demomenu;
 
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private View selectedFooterView;
     private Toolbar toolbar;
     private MonthSavingResponse monthSavingResponse;
-    private double totalAnnualSaving;
-    private View toolbarHead;
+    private View menuSavingHead;
     private PopupWindow popupDetails;
     private int currentMonth = 5;
+    public static Typeface typeFace;
 
 
     @Override
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        typeFace = Typeface.createFromAsset(getAssets(), "OpenSansRegular.ttf");
 
         //setupDrawerItemList();
 
@@ -75,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                //TODO Add some action here
+                //TODO Add main_menu_footer action here
                 //Executed when drawer closes
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //TODO Add some action here
+                //TODO Add main_menu_footer action here
                 //executes when drawer open
                 //drawerView.fi
             }
@@ -101,6 +105,19 @@ public class MainActivity extends AppCompatActivity {
         popupDetails = new PopupWindow(popupLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, false);
 
         setUpPopupViews();
+
+        setFonts();
+    }
+
+    private void setFonts() {
+
+        int[] data = new int[]{R.id.txtFavourite, R.id.txtContact, R.id.txtSearch, R.id.txtSettings};
+
+        for (int id : data) {
+            TextView text = (TextView) findViewById(R.id.txtFavourite);
+            if (text != null)
+                text.setTypeface(typeFace);
+        }
     }
 
     private void setFooterMenuOnItemClickListener() {
@@ -109,18 +126,22 @@ public class MainActivity extends AppCompatActivity {
 
         for (int id : data) {
 
-            findViewById(id).setOnClickListener(new View.OnClickListener() {
+            View view = findViewById(id);
 
-                @Override
-                public void onClick(View v) {
+            if (view != null) {
+                view.setOnClickListener(new View.OnClickListener() {
 
-                    if (selectedFooterView != null)
-                        selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+                    @Override
+                    public void onClick(View v) {
 
-                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
-                    selectedFooterView = v;
-                }
-            });
+                        if (selectedFooterView != null)
+                            selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+                        v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
+                        selectedFooterView = v;
+                    }
+                });
+            }
         }
     }
 
@@ -208,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
 
                             CategoryResponse categoryResponse = new CategoryResponse(response);
                             setUpMenuList(categoryResponse.getData());
-
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -276,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
                             monthSavingResponse = new MonthSavingResponse(response);
 
-                            if (toolbarHead == null) {
+                            if (menuSavingHead == null) {
 
                                 addHeaderToolbar();
                             }
@@ -301,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 
         /*int retval = Double.compare(currentYearSavings, 0);
 
-        View toolbarHead = null;
+        View menuSavingHead = null;
 
         if (retval > 0) {
 
@@ -313,13 +333,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (retval2 > 0) {
 
-                    toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                    menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
                 } else if (retval2 < 0) {
 
-                    toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
+                    menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
                 } else {
 
-                    toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                    menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
                 }
 
 
@@ -327,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
 
-                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
             }
 
         } else if (retval < 0) {
@@ -335,14 +355,14 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+            menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
         }
 
-        if (toolbarHead != null) {
+        if (menuSavingHead != null) {
             Toolbar.LayoutParams params = new Toolbar.LayoutParams(
                     Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
 
-            toolbarHead.setOnClickListener(new View.OnClickListener() {
+            menuSavingHead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -351,43 +371,43 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            toolbar.addView(toolbarHead, params);
+            toolbar.addView(menuSavingHead, params);
         }*/
 
 
         if (monthSavingResponse.getStatusCount() == 0) {
 
-            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+            menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
         } else if (monthSavingResponse.getStatusCount() == 2) {
 
-            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+            menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
         } else if (monthSavingResponse.getStatusCount() == 3) {
 
-            toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
+            menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
         } else if (monthSavingResponse.getStatusCount() == 1) {
 
             int retval2 = Double.compare(getTotalMonthSavings(monthSavingResponse), 35);
 
             if (retval2 > 0) {
 
-                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
             } else if (retval2 < 0) {
 
-                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
+                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
             } else {
 
-                toolbarHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
+                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
             }
 
         } else {
             Log.i(TAG, "error in monthSavingResponse");
         }
 
-        if (toolbarHead != null) {
-            Toolbar.LayoutParams params = new Toolbar.LayoutParams(
+        if (menuSavingHead != null) {
+            /*Toolbar.LayoutParams params = new Toolbar.LayoutParams(
                     Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
 
-            toolbarHead.setOnClickListener(new View.OnClickListener() {
+            menuSavingHead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -400,12 +420,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            toolbar.addView(toolbarHead, params);
+            toolbar.addView(menuSavingHead, params);*/
 
-            TextView textView = (TextView) toolbarHead.findViewById(R.id.txtTotalSaving);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menu_header);
+
+            linearLayout.addView(menuSavingHead, params);
+
+            TextView textView = (TextView) menuSavingHead.findViewById(R.id.txtTotalSaving);
 
             if (textView != null)
-                textView.setText("S/. " + String.valueOf(getTotalMonthSavings(monthSavingResponse)));
+                textView.setText(getResources().getString(R.string.money_format, getTotalMonthSavings(monthSavingResponse)));
         }
     }
 
@@ -453,16 +479,17 @@ public class MainActivity extends AppCompatActivity {
 
         View popup = popupDetails.getContentView();
 
-        TextView annualSaving = (TextView) popup.findViewById(R.id.annualSaving);
-        annualSaving.setText(getResources().getString(R.string.money_format, totalAnnualSaving));
-
         final Spinner spinner = (Spinner) popup.findViewById(R.id.spinner);
-        spinner.setSelection(currentMonth - 1);
+
+        spinner.setSelection(currentMonth - 1, false);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                Log.i(TAG, "on item selected " + position);
+                currentMonth = position + 1;
+                getConsumosPorMesFromServer(currentMonth);
             }
 
             @Override
@@ -472,14 +499,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final TextView nextTxt = (TextView) popup.findViewById(R.id.txtNext);
+        final TextView backTxt = (TextView) popup.findViewById(R.id.txtBack);
+
         nextTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 currentMonth++;
 
-                if(currentMonth == 12)
+                if (currentMonth == 12)
                     nextTxt.setVisibility(View.INVISIBLE);
+
+                if (currentMonth == 2)
+                    backTxt.setVisibility(View.VISIBLE);
 
                 getConsumosPorMesFromServer(currentMonth);
                 spinner.setSelection(currentMonth - 1, true);
@@ -487,14 +519,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView backTxt = (TextView) popup.findViewById(R.id.txtBack);
         backTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 currentMonth--;
 
+                if (currentMonth == 1)
+                    backTxt.setVisibility(View.INVISIBLE);
 
+                if (currentMonth == 11) {
+                    nextTxt.setVisibility(View.VISIBLE);
+                }
 
                 getConsumosPorMesFromServer(currentMonth);
                 spinner.setSelection(currentMonth - 1, true);
@@ -512,7 +548,9 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setVisibility(View.GONE);
         } else {
 
-            recyclerView.setVisibility(View.VISIBLE);
+            if (!recyclerView.isShown())
+                recyclerView.setVisibility(View.VISIBLE);
+
             ConsumptionsAdapter adapter = new ConsumptionsAdapter(monthSavingResponse.getData());
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
@@ -564,8 +602,8 @@ public class MainActivity extends AppCompatActivity {
 
                             Log.i(TAG, "no problems annual");
                             AnualSavingResponse anual = new AnualSavingResponse(response);
-                            totalAnnualSaving = anual.getData().getAhorroAnual();
-
+                            double totalAnnualSaving = anual.getData().getAhorroAnual();
+                            setAnnualSavingText(totalAnnualSaving);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -577,5 +615,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG, "message error " + error.getLocalizedMessage());
                     }
                 });
+    }
+
+    private void setAnnualSavingText(double savings) {
+
+        TextView annualSaving = (TextView) popupDetails.getContentView().findViewById(R.id.annualSaving);
+        annualSaving.setText(getResources().getString(R.string.money_format, savings));
     }
 }

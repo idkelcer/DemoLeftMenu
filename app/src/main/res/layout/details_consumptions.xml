@@ -23,7 +23,7 @@
         android:textColor="@color/colorBlueText"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
@@ -33,17 +33,18 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:entries="@array/country_arrays"
-            android:gravity="center"
+            android:entries="@array/month_array"
+            android:gravity="center_horizontal"
             android:prompt="@string/country_prompt"
             android:spinnerMode="dialog" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="2016"
             android:textSize="20sp"/>
 

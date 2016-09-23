@@ -5,32 +5,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/app_bar_main" />
-
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appBar">
 
-        <!--Content-->
-        <include layout="@layout/content_main" />
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--Toolbar-->
+            <include layout="@layout/app_bar_main" />
+
+            <!--Main Content-->
+            <include layout="@layout/content_main" />
+
+        </LinearLayout>
 
         <!-- Navigation Drawer-->
         <LinearLayout
             android:id="@+id/drawerMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start|bottom"
+            android:layout_gravity="start"
             android:background="@color/colorPrimary"
             android:orientation="vertical">
+
+            <include
+                layout="@layout/main_menu_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/drawerRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="left"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 app:reverseLayout="false"
                 app:stackFromEnd="false" />
 

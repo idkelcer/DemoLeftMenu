@@ -9,6 +9,7 @@ public class MonthSaving {
     private String nombre;
     private String fechaConsumo;
     private double montoDescontado;
+    private String iconoUrl;
 
     public int getTipoEstablecimientoId() {
         return tipoEstablecimientoId;
@@ -40,5 +41,13 @@ public class MonthSaving {
 
     public void setMontoDescontado(double montoDescontado) {
         this.montoDescontado = montoDescontado;
+    }
+
+    public String getIconoUrl() {
+        return iconoUrl;
+    }
+
+    public void setIconoUrl(String iconoUrl) {
+        this.iconoUrl = iconoUrl;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.kelvin.demomenu.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.example.kelvin.demomenu.ClubRequestManager;
 import com.example.kelvin.demomenu.R;
 import com.example.kelvin.demomenu.entities.MonthSaving;
 
@@ -52,13 +57,31 @@ public class ConsumptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         } else if (holder instanceof ListItem) {
 
-            ListItem item = (ListItem) holder;
+            final ListItem item = (ListItem) holder;
 
             item.txtBenefit.setText(monthSavings.get(position - 1).getNombre());
             item.txtDate.setText(monthSavings.get(position - 1).getFechaConsumo());
 
             item.txtSavings.setText(item.txtSavings.getContext().getResources().getString(R.string.money_format,
                                                                 monthSavings.get(position - 1).getMontoDescontado()));
+
+            ImageLoader imageLoader = ClubRequestManager.getInstance(item.txtBenefit.getContext()).getImageLoader();
+            imageLoader.get(monthSavings.get(position - 1).getIconoUrl(), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    Bitmap bitmap = response.getBitmap();
+                    if (bitmap != null) {
+
+                        BitmapDrawable drawableLeft = new BitmapDrawable(item.itemView.getContext().getResources(), bitmap);toString();
+                        drawableLeft.setBounds(0,0,100,100);
+                        item.txtBenefit.setCompoundDrawables(drawableLeft, null, null, null);
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
         }
     }
 

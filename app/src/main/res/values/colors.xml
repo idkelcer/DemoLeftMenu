@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#403e3e</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhiteText">#FFFFFF</color>
-    <color name="colorYelowText">#f7c100</color>
+    <color name="colorYelowText">#F7C100</color>
     <color name="colorBlueText">#00AFDF</color>
+    <color name="colorControlActivated">#FF89DD</color>
+    <color name="colorControlNormal">#659099</color>
+    <color name="colorControlHighlight">#F5821F</color>
+    <color name="colorSwitchThumbNormal">#F5821F</color>
 
     <color name="orange">#F5821F</color>
     <color name="blue">#0C7BBC</color>
@@ -18,4 +23,6 @@
     <color name="amarillo_letras">#F7C100</color>
     <color name="gris_letras">#403E3E</color>
     <color name="colorBlackTransparent">#88676767</color>
+
+
 </resources>

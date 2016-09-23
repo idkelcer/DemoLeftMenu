@@ -42,6 +42,7 @@ public class MonthSavingResponse {
                 monthSaving.setNombre(jsonObject1.getString("nombre"));
                 monthSaving.setFechaConsumo(jsonObject1.getString("fecha_consumo"));
                 monthSaving.setMontoDescontado(jsonObject1.getDouble("monto_descontado"));
+                monthSaving.setIconoUrl(jsonObject1.getString("icono"));
 
                 data.add(monthSaving);
             }

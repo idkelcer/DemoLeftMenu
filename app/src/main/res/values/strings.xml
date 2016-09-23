@@ -10,7 +10,7 @@
     <string name="referenciales">- Montos referenciales\n- Para ver todos tus consumos ingresa a\n&#160;&#160;www.clubelcomercio.pe e inicia sesión</string>
     <string name="money_format">S/. %.2f</string>
 
-    <string-array name="country_arrays">
+    <string-array name="month_array">
         <item>Enero</item>
         <item>Febrero</item>
         <item>Marzo</item>
@@ -23,6 +23,15 @@
         <item>Octubre</item>
         <item>Noviembre</item>
         <item>Diciembre</item>
+    </string-array>
+    
+    <string-array name="distance_array">
+        <item>500 METROS</item>
+        <item>1 KILÓMETRO</item>
+        <item>5 KILÓMETRO</item>
+        <item>10 KILÓMETRO</item>
+        <item>15 KILÓMETRO</item>
+        <item>20 KILÓMETRO</item>
     </string-array>
 
 </resources>

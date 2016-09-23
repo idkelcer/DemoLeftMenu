@@ -18,123 +18,65 @@ public class Category {
 
     private String slug;
 
+    private String color;
+
     private String icono;
 
-    private int drawable;
 
-    /**
-     *
-     * @return
-     * The id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id
-     * The id
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     * The nombre
-     */
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     *
-     * @param nombre
-     * The nombre
-     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     *
-     * @return
-     * The descripcion
-     */
     public Object getDescripcion() {
         return descripcion;
     }
 
-    /**
-     *
-     * @param descripcion
-     * The descripcion
-     */
     public void setDescripcion(Object descripcion) {
         this.descripcion = descripcion;
     }
 
-    /**
-     *
-     * @return
-     * The abreviado
-     */
     public String getAbreviado() {
         return abreviado;
     }
 
-    /**
-     *
-     * @param abreviado
-     * The abreviado
-     */
     public void setAbreviado(String abreviado) {
         this.abreviado = abreviado;
     }
 
-    /**
-     *
-     * @return
-     * The slug
-     */
     public String getSlug() {
         return slug;
     }
 
-    /**
-     *
-     * @param slug
-     * The slug
-     */
     public void setSlug(String slug) {
         this.slug = slug;
     }
 
-    /**
-     *
-     * @return
-     * The icono
-     */
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getIcono() {
         return icono;
     }
-
-    /**
-     *
-     * @param icono
-     * The icono
-     */
+    
     public void setIcono(String icono) {
         this.icono = icono;
-    }
-
-    public int getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
     }
 }

@@ -39,6 +39,7 @@ public class CategoryResponse {
                 category.setDescripcion(jsonObject1.getString("descripcion"));
                 category.setAbreviado(jsonObject1.getString("abreviado"));
                 category.setSlug(jsonObject1.getString("slug"));
+                category.setColor(jsonObject1.getString("color"));
                 category.setIcono(jsonObject1.getString("icono"));
 
                 data.add(category);
