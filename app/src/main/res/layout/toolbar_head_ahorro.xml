@@ -46,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="*Monto Referencial"
-            android:textColor="@color/colorWhiteText"/>
+            android:textColor="@color/colorWhiteText"
+            android:textSize="11sp"/>
 
     </LinearLayout>
 
