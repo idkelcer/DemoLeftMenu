@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,59 +6,65 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawerLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_below="@+id/appBar">
+        android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:id="@+id/container"
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawerLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!--Toolbar-->
-            <include layout="@layout/app_bar_main" />
-
-            <!--Main Content-->
-            <include layout="@layout/content_main" />
-
-        </LinearLayout>
-
-        <!-- Navigation Drawer-->
-        <LinearLayout
-            android:id="@+id/drawerMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
             android:fitsSystemWindows="true">
 
-            <include
-                layout="@layout/main_menu_header"
+            <LinearLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/drawerRecyclerView"
+                <!--Toolbar-->
+                <include layout="@layout/app_bar_main" />
+
+                <!--Main Content-->
+                <include layout="@layout/content_main" />
+
+            </LinearLayout>
+
+            <!-- Navigation Drawer-->
+            <LinearLayout
+                android:id="@+id/drawerMenu"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="left"
-                android:layout_weight="4"
-                app:reverseLayout="false"
-                app:stackFromEnd="false" />
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@color/colorPrimary"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
 
-            <include
-                layout="@layout/main_menu_footer"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <include
+                    layout="@layout/main_menu_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/drawerRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="4"
+                    app:reverseLayout="false"
+                    app:stackFromEnd="false" />
 
-    </android.support.v4.widget.DrawerLayout>
+                <include
+                    layout="@layout/main_menu_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
-</RelativeLayout>
+            </LinearLayout>
+
+        </android.support.v4.widget.DrawerLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

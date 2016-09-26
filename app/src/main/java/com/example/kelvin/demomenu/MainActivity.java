@@ -1,6 +1,8 @@
 package com.example.kelvin.demomenu;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -64,15 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         typeFace = Typeface.createFromAsset(getAssets(), "OpenSansRegular.ttf");
 
-        //setupDrawerItemList();
-
-        /*RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.drawerRecyclerView);
-
-        MenuAdapter adapter = new MenuAdapter(mDrawerItemList);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(adapter);*/
-
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close) {
@@ -99,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
         getConsumosPorMesFromServer(currentMonth);
         getTotalAnnualSavingsFromServer();
 
-        setFooterMenuOnItemClickListener();
+        if (findViewById(R.id.footerLayoutContact) != null)
+            setFooterMenuOnItemClickListener();
+        else
+            setFooterImageOnItemClickListener();
 
         View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
         popupDetails = new PopupWindow(popupLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, false);
@@ -122,26 +118,53 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFooterMenuOnItemClickListener() {
 
-        int[] data = new int[]{R.id.footerLayoutContact, R.id.footerLayoutFavourite, R.id.footerLayoutSearch, R.id.footerLayoutSettings};
+        int[] ids = new int[]{R.id.footerLayoutContact, R.id.footerLayoutFavourite, R.id.footerLayoutSearch, R.id.footerLayoutSettings};
 
-        for (int id : data) {
+        for (int id : ids) {
 
             View view = findViewById(id);
 
-            if (view != null) {
-                view.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
-                        if (selectedFooterView != null)
-                            selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+                   /* if (selectedFooterView != null)
+                        selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
-                        v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
-                        selectedFooterView = v;
+                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
+                    selectedFooterView = v;*/
+
+                    if (v.getId() == R.id.footerLayoutSettings) {
+                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
                     }
-                });
-            }
+                }
+            });
+        }
+    }
+
+    private void setFooterImageOnItemClickListener() {
+
+        int[] ids = new int[]{R.id.imgFavourite, R.id.imgContact, R.id.imgSearch, R.id.imgSettings};
+
+        for (int id : ids) {
+
+            View view = findViewById(id);
+
+            view.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    if (selectedFooterView != null)
+                        selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+                    v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
+                    selectedFooterView = v;
+
+                }
+            });
         }
     }
 
@@ -249,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
         MenuListAdapter adapter = new MenuListAdapter(categories);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         mRecyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new MenuListAdapter.OnItemSelecteListener() {
@@ -264,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                 if (selectedFooterView != null)
                     selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
-                v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlackTransparent));
+                v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
 
                 selectedView = v;
             }
@@ -404,38 +428,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (menuSavingHead != null) {
-            /*Toolbar.LayoutParams params = new Toolbar.LayoutParams(
-                    Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+            final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menu_header);
+
+            linearLayout.addView(menuSavingHead, params);
 
             menuSavingHead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Log.i(TAG, "on click");
                     if (popupDetails != null && popupDetails.isShowing())
                         popupDetails.dismiss();
                     else
-                        showPopup();
-
+                        popupDetails.showAsDropDown(linearLayout);
                 }
             });
 
-            toolbar.addView(menuSavingHead, params);*/
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menu_header);
-
-            linearLayout.addView(menuSavingHead, params);
-
             TextView textView = (TextView) menuSavingHead.findViewById(R.id.txtTotalSaving);
-
-           /* linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i(TAG, "clicked layout");
-                }
-            });*/
 
             if (textView != null)
                 textView.setText(getResources().getString(R.string.money_format, getTotalMonthSavings(monthSavingResponse)));
@@ -459,27 +470,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertDialog.show();
-    }
-
-    private void showPopup() {
-
-       /* PopupWindow popup = new PopupWindow(MainActivity.this.getParent());
-        View popupLayout = getLayoutInflater().inflate(R.layout.details_consumptions, null);
-        popup.setContentView(popupLayout);
-        //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-
-        //popup.setWindowLayoutType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        // Set content width and height
-        popup.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        popup.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);*/
-        // Closes the popup window when touch outside of it - when looses focus
-        // setUpPopupViews();
-
-        //popup.setOutsideTouchable(true);
-        //popup.setFocusable(true);
-        //popup.setBackgroundDrawable(new ColorDrawable());
-
-        popupDetails.showAsDropDown(toolbar);
     }
 
     private void setUpPopupViews() {
@@ -549,6 +539,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpPopupRecyclerView() {
 
         RecyclerView recyclerView = (RecyclerView) popupDetails.getContentView().findViewById(R.id.recyclerDetails);
+
 
         if (monthSavingResponse.getData().size() == 0) {
 

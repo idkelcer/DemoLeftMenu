@@ -2,24 +2,20 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:spinnerItemStyle">@style/MooSpinnerItem</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
+    <style name="AppTheme.Spinner">
+        <!-- Customize your theme here. -->
+        <item name="android:spinnerItemStyle">@style/MooSpinnerItem</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">true</item>
-        <item name="color">@color/colorYelowText</item>
-    </style>
 
     <style name="MooSpinnerItem" parent="android:Widget.TextView.SpinnerItem">
         <item name="android:textAppearance">@style/MooTextAppearanceSpinnerItem</item>
@@ -27,6 +23,12 @@
 
     <style name="MooTextAppearanceSpinnerItem" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
         <item name="android:textColor">@color/colorWhiteText</item>
+    </style>
+
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/colorYelowText</item>
+        <item name="android:textColorSecondary">@color/colorYelowText</item>
+        <item name="actionMenuTextColor">@color/colorYelowText</item>
     </style>
 
 </resources>

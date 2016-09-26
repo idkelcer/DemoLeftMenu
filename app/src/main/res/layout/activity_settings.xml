@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <include
+        android:id="@+id/toollayout"
+        layout="@layout/app_bar_main" />
 
     <TextView
         android:id="@+id/text"
@@ -13,17 +20,20 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="90dp"
+        android:layout_below="@+id/toollayout"
         android:text="AHORRO MENSUAL"
         android:textColor="@color/colorWhiteText" />
 
     <Switch
+        android:id="@+id/switcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/text"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:switchMinWidth="75dp"
-        android:text="Si"
         android:textColor="@color/colorWhiteText"
         android:track="@drawable/switch_track_selector" />
 

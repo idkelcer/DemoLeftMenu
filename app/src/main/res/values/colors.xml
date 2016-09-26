@@ -6,7 +6,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhiteText">#FFFFFF</color>
     <color name="colorYelowText">#F7C100</color>
-    <color name="colorBlueText">#00AFDF</color>
+    <color name="colorLightBlueText">#00AFDF</color>
     <color name="colorControlActivated">#FF89DD</color>
     <color name="colorControlNormal">#659099</color>
     <color name="colorControlHighlight">#F5821F</color>
@@ -23,6 +23,6 @@
     <color name="amarillo_letras">#F7C100</color>
     <color name="gris_letras">#403E3E</color>
     <color name="colorBlackTransparent">#88676767</color>
-
+    <color name="colorBackgroundIcon">#bfbfbf</color>
 
 </resources>
