@@ -3,16 +3,30 @@
     android:id="@+id/menu_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_margin="8dp">
+    android:background="@color/colorWhiteText"
+    android:orientation="horizontal">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:drawableTop="@drawable/portada"
-        android:text="some text"
-        android:gravity="center"
-        android:background="@color/colorWhiteText" />
+        android:orientation="vertical"
+        android:background="@color/colorWhiteText"
+        android:layout_margin="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/portada" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Portada"
+            android:textColor="@color/colorBlackTransparent"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
 </LinearLayout>

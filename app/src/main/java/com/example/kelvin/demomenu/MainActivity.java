@@ -422,13 +422,20 @@ public class MainActivity extends AppCompatActivity {
 
             toolbar.addView(menuSavingHead, params);*/
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menu_header);
 
             linearLayout.addView(menuSavingHead, params);
 
             TextView textView = (TextView) menuSavingHead.findViewById(R.id.txtTotalSaving);
+
+           /* linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "clicked layout");
+                }
+            });*/
 
             if (textView != null)
                 textView.setText(getResources().getString(R.string.money_format, getTotalMonthSavings(monthSavingResponse)));
