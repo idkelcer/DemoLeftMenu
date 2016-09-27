@@ -50,6 +50,17 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtNoConsumoInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/information_noahorro"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="No presentas consumos en este mes."
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

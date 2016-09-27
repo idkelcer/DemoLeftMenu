@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SUSCRÍBETE"
+            android:text="Suscríbete"
             android:textColor="@color/colorYelowText"/>
 
         <TextView
@@ -34,13 +34,10 @@
 
     </LinearLayout>
 
-    <TextView
+    <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text=">"
-        android:gravity="center"
-        android:textSize="28sp"
-        android:textColor="@color/colorYelowText"/>
+        android:src="@drawable/arrow_intro"/>
 
 </LinearLayout>

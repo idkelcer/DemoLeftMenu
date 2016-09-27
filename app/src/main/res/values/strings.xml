@@ -26,7 +26,7 @@
     </string-array>
     
     <string-array name="distance_array">
-        <item>500 METROS</item>
+        <item>0.5 KILÓMETRO</item>
         <item>1 KILÓMETRO</item>
         <item>5 KILÓMETROS</item>
         <item>10 KILÓMETROS</item>

@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:text="Ahorro Mensual"
         android:gravity="center"
         android:textColor="@color/colorYelowText"/>
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:gravity="center|center_vertical"
         android:text="="
         android:textSize="20sp"
@@ -50,5 +50,12 @@
             android:textSize="11sp"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:src="@drawable/arrow_intro"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
