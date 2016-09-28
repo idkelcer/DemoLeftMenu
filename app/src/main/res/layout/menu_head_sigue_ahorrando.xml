@@ -15,8 +15,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="SIGUE AHORRANDO"
-        android:gravity="center"
+        android:text="Sigue \nahorrando"
+        android:gravity="center|left"
         android:textColor="@color/colorYelowText"
         android:layout_marginLeft="10dp"/>
 

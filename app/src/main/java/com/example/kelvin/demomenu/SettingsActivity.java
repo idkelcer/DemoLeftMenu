@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -35,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setUpSwitcher() {
 
-        final Switch switcher = (Switch) findViewById(R.id.switcher);
+        final SwitchCompat switcher = (SwitchCompat) findViewById(R.id.switcher);
 
         switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -74,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("CONFIGURACIÓN");
+        getSupportActionBar().setTitle("Ajustes");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,16 +8,17 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:src="@drawable/money"
         android:layout_marginLeft="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="EMPIEZA A AHORRAR"
-        android:gravity="center"
+        android:text="Empieza a ahorrar\ndesde hoy"
+        android:gravity="center|left"
         android:textColor="@color/colorYelowText"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:textSize="19sp"/>
 
 </LinearLayout>

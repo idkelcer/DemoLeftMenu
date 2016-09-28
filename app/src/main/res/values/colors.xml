@@ -23,6 +23,6 @@
     <color name="amarillo_letras">#F7C100</color>
     <color name="gris_letras">#403E3E</color>
     <color name="colorBlackTransparent">#88676767</color>
-    <color name="colorBackgroundIcon">#bfbfbf</color>
+    <color name="colorIconBackground">#bfbfbf</color>
 
 </resources>

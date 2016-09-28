@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         setUpPopupViews();
     }
 
+
     private void setMenuTextBottomGone() {
 
         int[] data = new int[]{R.id.txtFavourite, R.id.txtContact, R.id.txtSearch, R.id.txtSettings};
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }*/
 
-    private int getScreenWidth(){
+    private int getScreenWidth() {
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -319,9 +320,9 @@ public class MainActivity extends AppCompatActivity {
                 if (selectedView != null)
                     selectedView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
-                if (selectedFooterView != null)
+                /*if (selectedFooterView != null)
                     selectedFooterView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-
+                */
                 v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.gray));
 
                 selectedView = v;
@@ -354,13 +355,9 @@ public class MainActivity extends AppCompatActivity {
 
                             monthSavingResponse = new MonthSavingResponse(response);
 
-                            if (menuSavingHead == null) {
-
-                                addHeaderToolbar();
-                            }
+                            addHeaderToMenu();
 
                             setUpPopupRecyclerView();
-
                             Log.i(TAG, "no problems");
                         }
                     }
@@ -375,105 +372,83 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void addHeaderToolbar() {
+    private void addHeaderToMenu() {
 
-        /*int retval = Double.compare(currentYearSavings, 0);
+        if(menuSavingHead != null)
+            return;
 
-        View menuSavingHead = null;
-
-        if (retval > 0) {
-
-            int retval1 = Double.compare(currentMonthSavings, 0);
-
-            if (retval1 > 0) {
-
-                int retval2 = Double.compare(currentMonthSavings, 35);
-
-                if (retval2 > 0) {
-
-                    menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
-                } else if (retval2 < 0) {
-
-                    menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
-                } else {
-
-                    menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
-                }
-
-
-            } else if (retval1 < 0) {
-
-            } else {
-
-                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
-            }
-
-        } else if (retval < 0) {
-
-
-        } else {
-
-            menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
-        }
-
-        if (menuSavingHead != null) {
-            Toolbar.LayoutParams params = new Toolbar.LayoutParams(
-                    Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
-
-            menuSavingHead.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Log.i(TAG, "on click");
-                    showPopup();
-                }
-            });
-
-            toolbar.addView(menuSavingHead, params);
-        }*/
-
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menu_header);
         int status = monthSavingResponse.getStatusCount();
 
-        if (status == 0 || status == 2 || status == 3) {
+       /* if (No ha iniciado sesion){
 
-            menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_empieza, null);
-        } else if (status == 1) {
+            menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_subscribe, null);
+        }else{
 
-            int retval = Double.compare(getTotalMonthSavings(), 35);
+            if (Selecciono no en ajustes){
 
-            if (retval > 0) {
+                menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_activa_ahorro, null);
 
-                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
-            } else if (retval < 0) {
+            }else{*/
 
-                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_sigue_ahorrando, null);
-            } else {
+                if (status == 0 || status == 3) {
 
-                menuSavingHead = getLayoutInflater().inflate(R.layout.toolbar_head_ahorro, null);
-            }
+                    menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_empieza, null);
+                } else if (status == 2) {
 
-        } else {
-            Log.i(TAG, "error in monthSavingResponse");
-        }
+                    menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_empieza, null);
+
+                    menuSavingHead.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Log.i(TAG, "menu click");
+
+                            if (popupDetails != null && popupDetails.isShowing())
+                                popupDetails.dismiss();
+                            else
+                                popupDetails.showAsDropDown(linearLayout);
+                        }
+                    });
+                } else if (status == 1) {
+
+                    int retval = Double.compare(getTotalMonthSavings(), 35);
+
+                    if (retval > 0) {
+
+                        menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_ahorro, null);
+                    } else if (retval < 0) {
+
+                        menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_sigue_ahorrando, null);
+                    } else {
+
+                        menuSavingHead = getLayoutInflater().inflate(R.layout.menu_head_ahorro, null);
+                    }
+
+                    menuSavingHead.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Log.i(TAG, "menu click");
+
+                            if (popupDetails != null && popupDetails.isShowing())
+                                popupDetails.dismiss();
+                            else
+                                popupDetails.showAsDropDown(linearLayout);
+                        }
+                    });
+
+                } else {
+                    Log.i(TAG, "error in monthSavingResponse");
+                }
+        /*    }
+        }*/
 
         if (menuSavingHead != null) {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menu_header);
+
             linearLayout.addView(menuSavingHead, params);
-
-            menuSavingHead.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Log.i(TAG, "menu click");
-
-                    if (popupDetails != null && popupDetails.isShowing())
-                        popupDetails.dismiss();
-                    else
-                        popupDetails.showAsDropDown(linearLayout);
-                }
-            });
 
             TextView textView = (TextView) menuSavingHead.findViewById(R.id.txtTotalSaving);
 

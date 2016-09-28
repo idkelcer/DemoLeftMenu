@@ -8,8 +8,13 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="AppTheme.Spinner">
+    <style name="AppTheme.Settings">
         <item name="android:spinnerItemStyle">@style/MooSpinnerItem</item>
+        <item name="colorControlActivated">@color/colorYelowText</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/colorYelowText</item>
+        <!-- Inactive track color(30% transparency) -->
+        <item name="android:colorForeground">@color/colorYelowText</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
