@@ -22,7 +22,8 @@
         android:layout_marginTop="80dp"
         android:layout_below="@+id/toollayout"
         android:text="Ahorro mensual"
-        android:textColor="@color/colorWhiteText" />
+        android:textColor="@color/colorWhiteText"
+        android:textSize="19sp"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/switcher"
@@ -56,7 +57,8 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="Cerca de mí"
-        android:textColor="@color/colorWhiteText" />
+        android:textColor="@color/colorWhiteText"
+        android:textSize="19sp"/>
 
     <Spinner
         android:id="@+id/spinner"
@@ -94,7 +96,8 @@
             android:layout_weight="1"
             android:background="@drawable/config_btn_shape"
             android:text="SALIR DE LA APP"
-            android:textColor="@color/colorYelowText" />
+            android:textColor="@color/colorYelowText"
+            android:textSize="13sp"/>
 
         <Button
             android:id="@+id/btnIniciar"
@@ -104,7 +107,8 @@
             android:layout_weight="1"
             android:background="@drawable/config_btn_shape"
             android:text="INICIAR SESIÓN"
-            android:textColor="@color/colorYelowText" />
+            android:textColor="@color/colorYelowText"
+            android:textSize="13sp"/>
 
     </LinearLayout>
 

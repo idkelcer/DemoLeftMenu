@@ -10,11 +10,11 @@
 
     <style name="AppTheme.Settings">
         <item name="android:spinnerItemStyle">@style/MooSpinnerItem</item>
-        <item name="colorControlActivated">@color/colorYelowText</item>
+        <item name="colorControlActivated">@color/colorWhiteText</item>
         <!-- Inactive thumb color -->
-        <item name="colorSwitchThumbNormal">@color/colorYelowText</item>
+        <item name="colorSwitchThumbNormal">@color/colorWhiteText</item>
         <!-- Inactive track color(30% transparency) -->
-        <item name="android:colorForeground">@color/colorYelowText</item>
+        <item name="android:colorForeground">@color/colorWhiteText</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

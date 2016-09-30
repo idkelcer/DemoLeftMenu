@@ -7,10 +7,7 @@
     <color name="colorWhiteText">#FFFFFF</color>
     <color name="colorYelowText">#F7C100</color>
     <color name="colorLightBlueText">#00AFDF</color>
-    <color name="colorControlActivated">#FF89DD</color>
-    <color name="colorControlNormal">#659099</color>
-    <color name="colorControlHighlight">#F5821F</color>
-    <color name="colorSwitchThumbNormal">#F5821F</color>
+    <color name="colorImageBenefitBack">#2a3132</color>
 
     <color name="orange">#F5821F</color>
     <color name="blue">#0C7BBC</color>
@@ -20,7 +17,6 @@
     <color name="gray">#848588</color>
 
     <color name="colorAhorroBackground">#403e3e</color>
-    <color name="amarillo_letras">#F7C100</color>
     <color name="gris_letras">#403E3E</color>
     <color name="colorBlackTransparent">#88676767</color>
     <color name="colorIconBackground">#bfbfbf</color>

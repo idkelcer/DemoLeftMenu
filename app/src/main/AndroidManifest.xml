@@ -17,7 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name">
         <activity
-            android:name=".MainActivity"
+            android:name=".BenefitActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
