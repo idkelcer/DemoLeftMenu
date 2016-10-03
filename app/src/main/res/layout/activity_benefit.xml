@@ -11,7 +11,7 @@
 
         <include
             android:id="@+id/toollayout"
-            layout="@layout/app_bar_main" />
+            layout="@layout/app_bar_benefit" />
 
         <RelativeLayout
             android:layout_width="match_parent"

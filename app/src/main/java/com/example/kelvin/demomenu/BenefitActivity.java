@@ -10,7 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -36,6 +40,7 @@ public class BenefitActivity extends AppCompatActivity {
 
     private static final String TAG = "BenefitActivity";
     Benefit benefit;
+    private PopupWindow popupFavorite;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +49,9 @@ public class BenefitActivity extends AppCompatActivity {
 
         setUpToolbar();
 
-        getBenefitFromServer();
+        /*getBenefitFromServer();
 
-        getRelatedBenefitsFromServer();
+        getRelatedBenefitsFromServer();*/
 
         TextView txtContact = (TextView) findViewById(R.id.txtContact);
         txtContact.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +94,17 @@ public class BenefitActivity extends AppCompatActivity {
                 }
             }
         });
+
+        View popupLayout = getLayoutInflater().inflate(R.layout.popup_benefit_favorite, null);
+        popupFavorite = new PopupWindow(popupLayout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
+        popupFavorite.setOutsideTouchable(true);
+
     }
 
     private void getBenefitFromServer() {
 
         String url = Constants.serviceUrl + "detalleBeneficio";
-        String fullUrl = url + "?idBeneficio=3027&session=d480d0d9db8ef474ac54a0af0ebe71a1";
+        String fullUrl = url + "?idBeneficio=3027&session=8d1f0c0c975be23cd963ce24b3ffddc7";
 
         ClubRequestManager.getInstance(this).performJsonRequest(Request.Method.GET, fullUrl, null,
 
@@ -199,6 +209,20 @@ public class BenefitActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+
+        Toolbar.LayoutParams params =  new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT,
+                                                            Toolbar.LayoutParams.MATCH_PARENT);
+        View view = getLayoutInflater().inflate(R.layout.benefit_custom_toolbar, null);
+
+        toolbar.addView(view, params);
+
+        ImageView igvFavorite = (ImageView) view.findViewById(R.id.igvFavorite);
+        igvFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupFavorite.showAsDropDown(findViewById(R.id.igvFavorite));
+            }
+        });
     }
 
     private void showError(String errorMessage) {
@@ -222,7 +246,7 @@ public class BenefitActivity extends AppCompatActivity {
     private void getRelatedBenefitsFromServer() {
 
         String url = Constants.serviceUrl + "beneficiosRelacionados";
-        String fullUrl = url + "?idBeneficio=2912&tipoBeneficioId=2&session=d480d0d9db8ef474ac54a0af0ebe71a1";
+        String fullUrl = url + "?idBeneficio=2912&tipoBeneficioId=2&session=8d1f0c0c975be23cd963ce24b3ffddc7";
 
         ClubRequestManager.getInstance(this).performJsonRequest(Request.Method.GET, fullUrl, null,
 

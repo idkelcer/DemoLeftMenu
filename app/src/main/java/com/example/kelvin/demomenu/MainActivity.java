@@ -96,11 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
         setFooterMenuOnItemClickListener();
 
-        /*if (findViewById(R.id.footerLayoutContact) != null)
-            setFooterMenuOnItemClickListener();
-        else
-            setFooterImageOnItemClickListener();*/
-
         if (getScreenWidth() <= 720)
             setMenuTextBottomGone();
         else
