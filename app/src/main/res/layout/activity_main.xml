@@ -24,10 +24,10 @@
                 android:orientation="vertical">
 
                 <!--Toolbar-->
-                <include layout="@layout/app_bar_main" />
+                <include layout="@layout/app_bar_benefit" />
 
                 <!--Main Content-->
-                <include layout="@layout/content_main" />
+                <include layout="@layout/content_benefit" />
 
             </LinearLayout>
 

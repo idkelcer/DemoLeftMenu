@@ -50,7 +50,7 @@
         android:calendarTextColor="#bfbfbf"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:theme="@style/datePickerCompatStyle" />
+        android:theme="@style/DatePickerCompatStyle" />
 
     <LinearLayout
         android:layout_width="match_parent"
