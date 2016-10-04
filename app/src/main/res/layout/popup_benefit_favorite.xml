@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:scrollbars="vertical">
 
     <TextView
+        android:id="@+id/txtAddBen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="Beneficio añadido\na tus favoritos"
-        android:textColor="#bfbfbf" />
+        android:textColor="#bfbfbf"
+        android:textSize="18sp" />
 
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER FAVORITOS" />
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/favorite_popup_btn_shape"
+        android:text="VER FAVORITOS"
+        android:textColor="@color/colorYelowText"
+        android:textSize="10sp" />
 
     <View
         android:layout_width="match_parent"
@@ -26,38 +35,53 @@
         android:background="@color/colorBlackTransparent" />
 
     <TextView
+        android:id="@+id/txtRecord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="Puedes añadir\nun recordatorio\npara este beneficio"
-        android:textColor="#bfbfbf"/>
+        android:textColor="#bfbfbf"
+        android:textSize="18sp" />
 
     <DatePicker
+        android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:calendarTextColor="#bfbfbf"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:calendarTextColor="#bfbfbf"
-        android:background="@color/colorYelowText"/>
+        android:theme="@style/datePickerCompatStyle" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
 
         <Button
+            android:id="@+id/btnSave"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="GUARDAR"/>
+            android:background="@drawable/favorite_popup_btn_shape"
+            android:text="GUARDAR"
+            android:textColor="@color/colorYelowText"
+            android:textSize="10sp" />
 
         <Button
+            android:id="@+id/btnCancel"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:text="CANCELAR"/>
+            android:background="@drawable/favorite_popup_btn_shape"
+            android:text="CANCELAR"
+            android:textColor="@color/colorYelowText"
+            android:textSize="10sp" />
 
     </LinearLayout>
 
 </LinearLayout>
+

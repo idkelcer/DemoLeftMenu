@@ -32,14 +32,14 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/suscribete"
+        android:src="@drawable/menu"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/arrow_intro"
+        android:src="@drawable/back"
         android:layout_marginLeft="40dp"
         android:layout_centerVertical="true"/>
 

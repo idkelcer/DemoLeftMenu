@@ -8,6 +8,7 @@
     <color name="colorYelowText">#F7C100</color>
     <color name="colorLightBlueText">#00AFDF</color>
     <color name="colorImageBenefitBack">#2a3132</color>
+    <color name="colorDatePickerDivider">#FFFFFF</color>
 
     <color name="orange">#F5821F</color>
     <color name="blue">#0C7BBC</color>

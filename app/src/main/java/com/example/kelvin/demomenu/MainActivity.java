@@ -474,12 +474,10 @@ public class MainActivity extends AppCompatActivity {
     private void setUpPopupViews() {
 
         popupDetails.setBackgroundDrawable(new ColorDrawable());
-
-        View popup = popupDetails.getContentView();
-
         popupDetails.setOutsideTouchable(true);
         popupDetails.setFocusable(true);
 
+        View popup = popupDetails.getContentView();
 
         final Spinner spinner = (Spinner) popup.findViewById(R.id.spinner);
 

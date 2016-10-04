@@ -1,9 +1,15 @@
 package com.example.kelvin.demomenu;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +17,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,6 +37,7 @@ import com.example.kelvin.demomenu.entities.RelatedBenefitResponsse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +48,6 @@ import java.util.List;
 public class BenefitActivity extends AppCompatActivity {
 
     private static final String TAG = "BenefitActivity";
-    Benefit benefit;
     private PopupWindow popupFavorite;
 
     @Override
@@ -49,9 +57,27 @@ public class BenefitActivity extends AppCompatActivity {
 
         setUpToolbar();
 
-        /*getBenefitFromServer();
+        getBenefitFromServer();
 
-        getRelatedBenefitsFromServer();*/
+        getRelatedBenefitsFromServer();
+
+        setOnClickListenerToTxt();
+
+        inflatePopupFavorite();
+    }
+
+    private void inflatePopupFavorite() {
+
+        View popupLayout = getLayoutInflater().inflate(R.layout.popup_benefit_favorite, null);
+        popupFavorite = new PopupWindow(popupLayout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
+        popupFavorite.setOutsideTouchable(true);
+        popupFavorite.setBackgroundDrawable(new ColorDrawable());
+        popupFavorite.setFocusable(true);
+
+        setUpBenefitPopup(popupLayout);
+    }
+
+    private void setOnClickListenerToTxt() {
 
         TextView txtContact = (TextView) findViewById(R.id.txtContact);
         txtContact.setOnClickListener(new View.OnClickListener() {
@@ -94,11 +120,57 @@ public class BenefitActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        View popupLayout = getLayoutInflater().inflate(R.layout.popup_benefit_favorite, null);
-        popupFavorite = new PopupWindow(popupLayout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
-        popupFavorite.setOutsideTouchable(true);
+    private void setUpBenefitPopup(View view) {
 
+        DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
+        colorizeDatePicker(datePicker);
+
+        TextView txtAdd = (TextView) view.findViewById(R.id.txtAddBen);
+        txtAdd.setTypeface(MainActivity.typeFace);
+
+        TextView txtRec = (TextView) view.findViewById(R.id.txtRecord);
+        txtRec.setTypeface(MainActivity.typeFace);
+
+        Button btnSave = (Button) view.findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showAlertDialog();
+            }
+        });
+
+        Button btnCancel = (Button) view.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupFavorite.dismiss();
+            }
+        });
+    }
+
+    private void showAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialogStyle);
+        //builder.setTitle("AppCompatDialog");
+        builder.setMessage("Beneficio añadido a \"Recordatorios\"");
+        builder.setPositiveButton("Ver Recordatorios", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void getBenefitFromServer() {
@@ -124,8 +196,8 @@ public class BenefitActivity extends AppCompatActivity {
                         } else {
 
                             BenefitResponse benefitResponse = new BenefitResponse(response);
-                            benefit = benefitResponse.getData();
-                            setUpActivityViews();
+                            Benefit benefit = benefitResponse.getData();
+                            setUpActivityViews(benefit);
 
                             Log.i(TAG, benefitResponse.getData().getWeb());
                         }
@@ -142,9 +214,9 @@ public class BenefitActivity extends AppCompatActivity {
 
     }
 
-    private void setUpActivityViews() {
+    private void setUpActivityViews(Benefit benefit) {
 
-        loadImage();
+        loadImage(benefit);
 
         TextView txtName = (TextView) findViewById(R.id.txtTitle);
         txtName.setText(benefit.getTitulo());
@@ -175,12 +247,9 @@ public class BenefitActivity extends AppCompatActivity {
 
         TextView txtTerminosText = (TextView) findViewById(R.id.txtTerminosText);
         txtTerminosText.setText(benefit.getTerminosCondicionesWeb());
-
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.vwpRelatedBenefit);
     }
 
-    private void loadImage() {
+    private void loadImage(Benefit benefit) {
 
        /* ImageLoader imageLoader = ClubRequestManager.getInstance(getApplicationContext()).getImageLoader();
 
@@ -210,8 +279,8 @@ public class BenefitActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
 
-        Toolbar.LayoutParams params =  new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT,
-                                                            Toolbar.LayoutParams.MATCH_PARENT);
+        Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT,
+                Toolbar.LayoutParams.MATCH_PARENT);
         View view = getLayoutInflater().inflate(R.layout.benefit_custom_toolbar, null);
 
         toolbar.addView(view, params);
@@ -220,7 +289,33 @@ public class BenefitActivity extends AppCompatActivity {
         igvFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupFavorite.showAsDropDown(findViewById(R.id.igvFavorite));
+
+                ImageView image = (ImageView) v;
+
+                if (image.getDrawable().getConstantState() == ContextCompat.getDrawable(getApplicationContext(), R.drawable.favorite).getConstantState()){
+
+                    image.setImageResource(R.drawable.favorite_on);
+                }else
+                    image.setImageResource(R.drawable.favorite);
+
+                if (popupFavorite.isShowing())
+                    popupFavorite.dismiss();
+                else
+                    popupFavorite.showAsDropDown(findViewById(R.id.igvFavorite));
+            }
+        });
+
+        ImageView igvShare = (ImageView) view.findViewById(R.id.igvShare);
+        igvShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String message = "Text I want to share.";
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, message);
+
+                startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
             }
         });
     }
@@ -306,5 +401,38 @@ public class BenefitActivity extends AppCompatActivity {
 
         if (relatedBenefitAdapter.getCount() != 1)
             pager.setPageMargin(20);
+    }
+
+    public void colorizeDatePicker(DatePicker datePicker) {
+        Resources system = Resources.getSystem();
+        int dayId = system.getIdentifier("day", "id", "android");
+        int monthId = system.getIdentifier("month", "id", "android");
+        int yearId = system.getIdentifier("year", "id", "android");
+
+        NumberPicker dayPicker = (NumberPicker) datePicker.findViewById(dayId);
+        NumberPicker monthPicker = (NumberPicker) datePicker.findViewById(monthId);
+        NumberPicker yearPicker = (NumberPicker) datePicker.findViewById(yearId);
+
+        setDividerColor(dayPicker);
+        setDividerColor(monthPicker);
+        setDividerColor(yearPicker);
+    }
+
+    private void setDividerColor(NumberPicker picker) {
+        if (picker == null)
+            return;
+
+        final int count = picker.getChildCount();
+        for (int i = 0; i < count; i++) {
+            try {
+                Field dividerField = picker.getClass().getDeclaredField("mSelectionDivider");
+                dividerField.setAccessible(true);
+                ColorDrawable colorDrawable = new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.colorDatePickerDivider));
+                dividerField.set(picker, colorDrawable);
+                picker.invalidate();
+            } catch (Exception e) {
+                Log.w("setDividerColor", e);
+            }
+        }
     }
 }
